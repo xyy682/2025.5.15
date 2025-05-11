@@ -1,0 +1,18 @@
+# ninja log v6
+2	80	7686439618218533	D:/qt/work01/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/cmake.verify_globs	d8bea2d95f5d5279
+2962	5411	7686437570592260	CMakeFiles/work01.dir/dungeon.cpp.obj	d5efe060e84c84fd
+197	1566	7686439625032234	build.ninja	a97691949180b3a3
+184	2402	7686437562165629	work01_autogen/mocs_compilation.cpp	e039887f2b53fd4b
+184	2402	7686437562165629	work01_autogen/timestamp	e039887f2b53fd4b
+184	2402	7686437562165629	D:/qt/work01/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/work01_autogen/timestamp	e039887f2b53fd4b
+184	2402	7686437562165629	D:/qt/work01/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/work01_autogen/mocs_compilation.cpp	e039887f2b53fd4b
+2558	4960	7686437566556162	CMakeFiles/work01.dir/main.cpp.obj	e9941fd124c97ba6
+3100	3640	7686437571971144	CMakeFiles/work01.dir/player.cpp.obj	6b51c1c77a4b56c4
+3222	3793	7686437573189299	CMakeFiles/work01.dir/monster.cpp.obj	566e85f2c20605fd
+3346	3813	7686437574434129	CMakeFiles/work01.dir/item.cpp.obj	9ecc970bfcc41784
+2407	4996	7686437565046018	CMakeFiles/work01.dir/work01_autogen/mocs_compilation.cpp.obj	85ce04d2884643ab
+2676	5091	7686437567742618	CMakeFiles/work01.dir/mainwindow.cpp.obj	194e8f712c1661ac
+2818	5301	7686437569153268	CMakeFiles/work01.dir/dungeonview.cpp.obj	d8fab706f59fef3c
+5411	6305	7686437595080878	work01.exe	90769a8ec19d17fa
+80	763	7686439625032234	build.ninja	a97691949180b3a3
+2	77	7686439625384385	D:/qt/work01/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/cmake.verify_globs	d8bea2d95f5d5279
