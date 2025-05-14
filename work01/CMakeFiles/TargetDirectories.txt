@@ -1,0 +1,9 @@
+D:/work/2025.5.15/work01/CMakeFiles/work01.dir
+D:/work/2025.5.15/work01/CMakeFiles/edit_cache.dir
+D:/work/2025.5.15/work01/CMakeFiles/rebuild_cache.dir
+D:/work/2025.5.15/work01/CMakeFiles/list_install_components.dir
+D:/work/2025.5.15/work01/CMakeFiles/install.dir
+D:/work/2025.5.15/work01/CMakeFiles/install/local.dir
+D:/work/2025.5.15/work01/CMakeFiles/install/strip.dir
+D:/work/2025.5.15/work01/CMakeFiles/work01_autogen_timestamp_deps.dir
+D:/work/2025.5.15/work01/CMakeFiles/work01_autogen.dir

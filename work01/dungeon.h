@@ -18,7 +18,7 @@ struct Shockwave {
 class Dungeon  : public QObject{
     Q_OBJECT
 public:
-QVector<QVector<int>> wallHitCount; // 记录每个格子的受击次数
+    QVector<QVector<int>> wallHitCount; // 记录每个格子的受击次数
     int lastMoveDx = 1; // 最后一次位移方向决定冲击波方向，，，默认向右
     int lastMoveDy = 0;
     void moveMonsters();//怪物移动函数
@@ -34,7 +34,7 @@ QVector<QVector<int>> wallHitCount; // 记录每个格子的受击次数
     void updateShockwaves();
     int getLevel() const { return level; }
     void setLevel(int l) { level = l; }
- bool hasKey() const { return m_hasKey; } // 添加获取钥匙状态的方法
+    bool hasKey() const { return m_hasKey; } // 添加获取钥匙状态的方法
 signals:
     void playerStatusChanged();
     void gameWin();

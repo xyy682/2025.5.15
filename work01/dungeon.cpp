@@ -125,32 +125,61 @@ void Dungeon::updateVisibility() {
     }
 
     // 重新绘制地牢、角色、怪物、物品
+    // 绘制地图
     for (int y=0; y<height; ++y) {
         for (int x=0; x<width; ++x) {
+            // 绘制地板/墙壁
             QGraphicsRectItem *cell = m_scene->addRect(x*32, y*32, 32, 32,
                                                        QPen(Qt::black), QBrush(map[y][x]==0 ? Qt::darkGray : Qt::lightGray));
-            if (map[y][x]==2)
-                m_scene->addRect(x*32+8, y*32+8, 16, 16, QPen(Qt::NoPen), QBrush(Qt::yellow));
+            // 绘制出口
+            if (map[y][x] == 2) {
+                QPixmap img;
+                if (m_hasKey) {
+                    static int doorAnim = 0;
+                    img.load(doorAnim < 30 ? "door_open.png" : "stairs.png");
+                    doorAnim = (doorAnim + 1) % 60;
+                } else {
+                    img.load("door_closed.png");
+                }
+                QGraphicsPixmapItem* doorItem = m_scene->addPixmap(img);
+                doorItem->setPos(x*32, y*32);
+            }
         }
     }
-    // 玩家
-    m_scene->addEllipse(player->x*32+4, player->y*32+4, 24, 24, QPen(Qt::blue), QBrush(Qt::blue));
-    // 怪物
-    for (auto m : monsters)
-        m_scene->addEllipse(m->x*32+8, m->y*32+8, 16, 16, QPen(Qt::red), QBrush(Qt::red));
-    // 物品
-    for (auto i : items) {
-        QColor color;
-        switch (i->type) {
-        case Heal: color = Qt::green; break;
-        case AttackUp: color = Qt::red; break;
-        case DefenseUp: color = Qt::blue; break;
-        case Key: color = Qt::yellow; break; // 钥匙显示为黄色
-        }
-        m_scene->addEllipse(i->x*32+12, i->y*32+12, 8, 8, QPen(color), QBrush(color));
-    }
+            // 绘制玩家
+            QPixmap playerImg;
+            QString frameName = player->isMoving ?
+                                    QString("player_walk%1").arg(player->animFrame+1) :
+                                    QString("player_idle%1").arg((player->animFrame%2)+1);
+            playerImg.load(frameName + ".png");
+            if (player->faceDir == -1) playerImg = playerImg.transformed(QTransform().scale(-1, 1));
+            QGraphicsPixmapItem* playerItem = m_scene->addPixmap(playerImg);
+            playerItem->setPos(player->x*32, player->y*32);
+            // 绘制怪物（类似玩家逻辑）
+            for (auto m : monsters) {
+                QPixmap monsterImg;
+                QString mFrame = m->isMoving ?
+                                     QString("monster_walk%1").arg((m->animFrame%2)+1) :
+                                     QString("monster_idle%1").arg((m->animFrame%2)+1);
+                monsterImg.load(mFrame + ".png");
+                if (m->faceDir == -1) monsterImg = monsterImg.transformed(QTransform().scale(-1, 1));
+                QGraphicsPixmapItem* mItem = m_scene->addPixmap(monsterImg);
+                mItem->setPos(m->x*32, m->y*32);
+            }
+            // 绘制道具
+            for (auto i : items) {
+                QPixmap itemImg;
+                switch (i->type) {
+                case Heal: itemImg.load("item_heal.png"); break;
+                case AttackUp: itemImg.load("item_attack.png"); break;
+                case DefenseUp: itemImg.load("item_defense.png"); break;
+                case Key: itemImg.load("item_key.png"); break;
+                }
+                QGraphicsPixmapItem* item = m_scene->addPixmap(itemImg);
+                item->setPos(i->x*32+8, i->y*32+8); // 居中显示
+            }
 
-        emit playerStatusChanged();
+    emit playerStatusChanged();
 
 }
 bool Dungeon::handlePlayerMove(int key) {
@@ -206,11 +235,21 @@ bool Dungeon::handlePlayerMove(int key) {
             player->y = ny - dy;
             return true;
         }
-        emit gameWin();
-        return true;
+        else {
+            // 触发开门动画
+            static int doorAnimFrame = 0;
+            if (doorAnimFrame < 60) { // 持续60帧动画
+                doorAnimFrame++;
+                updateVisibility();
+                return true;
+            } else {
+                doorAnimFrame = 0;
+                emit gameWin();
+            }
+        }
     }
 
-moveMonsters();
+    moveMonsters();
     // 玩家移动后，怪物攻击玩家（四周怪物都攻击一次）
     int px = player->x, py = player->y;
     int dxs[4] = {1, -1, 0, 0}, dys[4] = {0, 0, 1, -1};
@@ -226,7 +265,7 @@ moveMonsters();
         emit gameOver();
         return true;
     }
-                         //
+    //
     updateVisibility();
     emit playerStatusChanged();
     return true;
@@ -298,7 +337,7 @@ void Dungeon::fireShockwave() {
     fireShockwave(lastMoveDx, lastMoveDy);
 }
 void Dungeon::fireShockwaveAll() {
-     qDebug() << "fireShockwaveAll called!";
+    qDebug() << "fireShockwaveAll called!";
     fireShockwave(1, 0);
     fireShockwave(-1, 0);
     fireShockwave(0, 1);
