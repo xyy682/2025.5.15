@@ -5,5 +5,16 @@
         <file>images/player_walk1.png</file>
         <file>images/player_walk2.png</file>
         <file>images/player_walk3.png</file>
+        <file>images/door_closed.png</file>
+        <file>images/door_open.png</file>
+        <file>images/item_attack.png</file>
+        <file>images/item_defense.png</file>
+        <file>images/item_heal.png</file>
+        <file>images/item_key.png</file>
+        <file>images/stairs.png</file>
+        <file>images/monster_idle1.png</file>
+        <file>images/monster_idle2.png</file>
+        <file>images/monster_walk1.png</file>
+        <file>images/monster_walk2.png</file>
     </qresource>
 </RCC>

@@ -241,7 +241,7 @@ build work01_autogen/timestamp work01_autogen/mocs_compilation.cpp | ${cmake_nin
 #############################################
 # Custom command for work01_autogen\EWIEGA46WW\qrc_images.cpp
 
-build work01_autogen/EWIEGA46WW/qrc_images.cpp | ${cmake_ninja_workdir}work01_autogen/EWIEGA46WW/qrc_images.cpp: CUSTOM_COMMAND images.qrc CMakeFiles/work01_autogen.dir/AutoRcc_images_EWIEGA46WW_Info.json images/player_walk2.png images/player_idle2.png images/player_walk1.png images/player_idle1.png images/player_walk3.png D$:/qt/6.9.0/mingw_64/bin/rcc.exe D$:/qt/6.9.0/mingw_64/bin/rcc.exe || work01_autogen work01_autogen_timestamp_deps
+build work01_autogen/EWIEGA46WW/qrc_images.cpp | ${cmake_ninja_workdir}work01_autogen/EWIEGA46WW/qrc_images.cpp: CUSTOM_COMMAND images.qrc CMakeFiles/work01_autogen.dir/AutoRcc_images_EWIEGA46WW_Info.json images/player_walk2.png images/item_key.png images/door_open.png images/player_idle2.png images/item_attack.png images/player_walk1.png images/player_idle1.png images/monster_walk2.png images/door_closed.png images/item_defense.png images/monster_idle2.png images/player_walk3.png images/item_heal.png images/monster_walk1.png images/monster_idle1.png images/stairs.png D$:/qt/6.9.0/mingw_64/bin/rcc.exe D$:/qt/6.9.0/mingw_64/bin/rcc.exe || work01_autogen work01_autogen_timestamp_deps
   COMMAND = C:\Windows\system32\cmd.exe /C "cd /D D:\work\2025.5.15\work01 && D:\qt\Tools\CMake_64\bin\cmake.exe -E cmake_autorcc D:/work/2025.5.15/work01/CMakeFiles/work01_autogen.dir/AutoRcc_images_EWIEGA46WW_Info.json Debug"
   DESC = Automatic RCC for images.qrc
   restat = 1

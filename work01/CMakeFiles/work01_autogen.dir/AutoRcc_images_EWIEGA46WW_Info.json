@@ -10,10 +10,21 @@
 	"INPUTS" : 
 	[
 		"D:/work/2025.5.15/work01/images/player_walk2.png",
+		"D:/work/2025.5.15/work01/images/item_key.png",
+		"D:/work/2025.5.15/work01/images/door_open.png",
 		"D:/work/2025.5.15/work01/images/player_idle2.png",
+		"D:/work/2025.5.15/work01/images/item_attack.png",
 		"D:/work/2025.5.15/work01/images/player_walk1.png",
 		"D:/work/2025.5.15/work01/images/player_idle1.png",
-		"D:/work/2025.5.15/work01/images/player_walk3.png"
+		"D:/work/2025.5.15/work01/images/monster_walk2.png",
+		"D:/work/2025.5.15/work01/images/door_closed.png",
+		"D:/work/2025.5.15/work01/images/item_defense.png",
+		"D:/work/2025.5.15/work01/images/monster_idle2.png",
+		"D:/work/2025.5.15/work01/images/player_walk3.png",
+		"D:/work/2025.5.15/work01/images/item_heal.png",
+		"D:/work/2025.5.15/work01/images/monster_walk1.png",
+		"D:/work/2025.5.15/work01/images/monster_idle1.png",
+		"D:/work/2025.5.15/work01/images/stairs.png"
 	],
 	"LOCK_FILE" : "D:/work/2025.5.15/work01/CMakeFiles/work01_autogen.dir/AutoRcc_images_EWIEGA46WW_Lock.lock",
 	"MULTI_CONFIG" : false,
