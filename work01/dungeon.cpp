@@ -111,7 +111,7 @@ void Dungeon::generateDungeon() {
 }
 
 void Dungeon::updateVisibility() {
-    // 只移除非冲击波的item
+
     QList<QGraphicsItem*> itemsToRemove;
     for (auto item : m_scene->items()) {
         // 不是冲击波的item才移除
@@ -125,59 +125,30 @@ void Dungeon::updateVisibility() {
     }
 
     // 重新绘制地牢、角色、怪物、物品
-    // 绘制地图
     for (int y=0; y<height; ++y) {
         for (int x=0; x<width; ++x) {
-            // 绘制地板/墙壁
             QGraphicsRectItem *cell = m_scene->addRect(x*32, y*32, 32, 32,
                                                        QPen(Qt::black), QBrush(map[y][x]==0 ? Qt::darkGray : Qt::lightGray));
-            // 绘制出口
-            if (map[y][x] == 2) {
-                QPixmap img;
-                if (m_hasKey) {
-                    static int doorAnim = 0;
-                    img.load(doorAnim < 30 ? "door_open.png" : "stairs.png");
-                    doorAnim = (doorAnim + 1) % 60;
-                } else {
-                    img.load("door_closed.png");
-                }
-                QGraphicsPixmapItem* doorItem = m_scene->addPixmap(img);
-                doorItem->setPos(x*32, y*32);
-            }
+            if (map[y][x]==2)
+                m_scene->addRect(x*32+8, y*32+8, 16, 16, QPen(Qt::NoPen), QBrush(Qt::yellow));
         }
     }
-            // 绘制玩家
-            QPixmap playerImg;
-            QString frameName = player->isMoving ?
-                                    QString("player_walk%1").arg(player->animFrame+1) :
-                                    QString("player_idle%1").arg((player->animFrame%2)+1);
-            playerImg.load(frameName + ".png");
-            if (player->faceDir == -1) playerImg = playerImg.transformed(QTransform().scale(-1, 1));
-            QGraphicsPixmapItem* playerItem = m_scene->addPixmap(playerImg);
-            playerItem->setPos(player->x*32, player->y*32);
-            // 绘制怪物（类似玩家逻辑）
-            for (auto m : monsters) {
-                QPixmap monsterImg;
-                QString mFrame = m->isMoving ?
-                                     QString("monster_walk%1").arg((m->animFrame%2)+1) :
-                                     QString("monster_idle%1").arg((m->animFrame%2)+1);
-                monsterImg.load(mFrame + ".png");
-                if (m->faceDir == -1) monsterImg = monsterImg.transformed(QTransform().scale(-1, 1));
-                QGraphicsPixmapItem* mItem = m_scene->addPixmap(monsterImg);
-                mItem->setPos(m->x*32, m->y*32);
-            }
-            // 绘制道具
-            for (auto i : items) {
-                QPixmap itemImg;
-                switch (i->type) {
-                case Heal: itemImg.load("item_heal.png"); break;
-                case AttackUp: itemImg.load("item_attack.png"); break;
-                case DefenseUp: itemImg.load("item_defense.png"); break;
-                case Key: itemImg.load("item_key.png"); break;
-                }
-                QGraphicsPixmapItem* item = m_scene->addPixmap(itemImg);
-                item->setPos(i->x*32+8, i->y*32+8); // 居中显示
-            }
+    // 玩家
+    m_scene->addEllipse(player->x*32+4, player->y*32+4, 24, 24, QPen(Qt::blue), QBrush(Qt::blue));
+    // 怪物
+    for (auto m : monsters)
+        m_scene->addEllipse(m->x*32+8, m->y*32+8, 16, 16, QPen(Qt::red), QBrush(Qt::red));
+    // 物品
+    for (auto i : items) {
+        QColor color;
+        switch (i->type) {
+        case Heal: color = Qt::green; break;
+        case AttackUp: color = Qt::red; break;
+        case DefenseUp: color = Qt::blue; break;
+        case Key: color = Qt::yellow; break; // 钥匙显示为黄色
+        }
+        m_scene->addEllipse(i->x*32+12, i->y*32+12, 8, 8, QPen(color), QBrush(color));
+    }
 
     emit playerStatusChanged();
 
@@ -230,23 +201,13 @@ bool Dungeon::handlePlayerMove(int key) {
     // 检查是否到达出口
     if (map[ny][nx] == 2) {
         if (!m_hasKey) {
-            // 如果没有钥匙，退回原位
+            // 如果没有钥匙，退回
             player->x = nx - dx;
             player->y = ny - dy;
             return true;
         }
-        else {
-            // 触发开门动画
-            static int doorAnimFrame = 0;
-            if (doorAnimFrame < 60) { // 持续60帧动画
-                doorAnimFrame++;
-                updateVisibility();
-                return true;
-            } else {
-                doorAnimFrame = 0;
-                emit gameWin();
-            }
-        }
+        emit gameWin();
+        return true;
     }
 
     moveMonsters();
@@ -393,7 +354,7 @@ void Dungeon::updateShockwaves() {
 }
 void Dungeon::moveMonsters() {
     for (auto m : monsters) {
-        // 计算怪物到玩家的距离
+        // 计算人兽间距
         int dx = player->x - m->x;
         int dy = player->y - m->y;
         int stepX = (dx == 0) ? 0 : (dx > 0 ? 1 : -1);
@@ -401,7 +362,7 @@ void Dungeon::moveMonsters() {
 
         // 怪物优先横向移动，如果横向不能走再尝试纵向
         bool moved = false;
-        // 检查目标格子是否可走（地板、没有怪物、不是玩家、不是出口）
+        // 检查目标格子是不是地板
         int tx = m->x + stepX, ty = m->y;
         bool canMoveX = (stepX != 0) && (tx >= 0 && tx < width && ty >= 0 && ty < height)
                         && map[ty][tx] == 1
@@ -422,6 +383,6 @@ void Dungeon::moveMonsters() {
                 moved = true;
             }
         }
-        // 如果不能移动就原地不动
+        // 走不了就停着
     }
 }

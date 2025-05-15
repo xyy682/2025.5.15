@@ -2,4 +2,3 @@
 #include "EWIEGA46WW/moc_dungeon.cpp"
 #include "EWIEGA46WW/moc_dungeonview.cpp"
 #include "EWIEGA46WW/moc_mainwindow.cpp"
-#include "EWIEGA46WW/moc_startmenu.cpp"

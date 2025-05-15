@@ -1,7 +1,6 @@
 #pragma once
 #include <QGraphicsView>
 #include <QKeyEvent>
-
 #include "dungeon.h"
 
 class DungeonView : public QGraphicsView {

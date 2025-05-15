@@ -30,17 +30,17 @@ public:
     void fireShockwave();
     Player* getPlayer() { return player; }
     void fireShockwave(int dx, int dy); // 单方向,函数重载这个是有参调用
-    void fireShockwaveAll();          // 四方向
+    void fireShockwaveAll();          // 四方向  暂时舍弃
     void updateShockwaves();
     int getLevel() const { return level; }
     void setLevel(int l) { level = l; }
-    bool hasKey() const { return m_hasKey; } // 添加获取钥匙状态的方法
+    bool hasKey() const { return m_hasKey; } // 获取钥匙状态
 signals:
     void playerStatusChanged();
     void gameWin();
     void gameOver();
 private:
-    int level = 1; // 当前关卡数
+    int level = 1; // 关卡数
     void generateDungeon();
     void updateVisibility();
     QGraphicsScene *m_scene;

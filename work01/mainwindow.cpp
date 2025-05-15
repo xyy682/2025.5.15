@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     playerStatusLabel->setAlignment(Qt::AlignLeft);
     playerStatusLabel->setFixedHeight(30);
 
-    // 新增：用布局把标签和游戏视图都加到主窗口
+    // 用布局把标签和游戏视图都加到主窗口
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(playerStatusLabel);
     layout->addWidget(dungeonView);
